@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script type="text/javascript" src="assets/js/jquery-3.5.1.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar">
+	<div class="brand-title">GTA</div>
+	<div class="navbar-links">
+		<ul>
+			<li><a href="sign-in-page.html" id="sign-in-page">Sign in</a></li>
+			<li><a href="sign-up-page.html" id="sign-up-page">Sign up</a></li>
+		</ul>
+	</div>
+</nav>
+<div class="page">
+	<form class="reservation">
+		<div>
+			<div class="inlined">
+				<label for="hotel-name">Hotel name</label><br>
+				<select id="hotel-name" name="hotelName">
+					<option value="VC Hotel">VC Hotel</option>
+					<option value="LS Hotel">LS Hotel</option>
+					<option value="LC Hotel">LC Hotel</option>
+					<option value="Ludendorf Hotel">Ludendorf Hotel</option>
+					<option value="Animus">Animus</option>
+					<option value="Helix">Helix</option>
+				</select>
+			</div>
+			<div class="inlined">
+				<label for="room-type">Room Type</label><br>
+				<select id="room-type" name="roomType">
+					<option value="single">Single</option>
+					<option value="double">Double</option>
+					<option value="presidental">Presidental</option>
+				</select>
+			</div>
+		</div>
+		<div>
+			<div class="inlined">
+				<label>From date</label><br>
+				<input type="date" id="from-date">
+			</div>
+			<div class="inlined">
+				<label>To date</label><br>
+				<input type="date" id="to-date">
+			</div>
+
+			<script>
+				var n = new Date();
+				var y = n.getFullYear();
+				var m = n.getMonth() + 1;
+				var d = n.getDate();
+				var fd = y + '-' + m + '-' + d;
+				$('#from-date').attr({'min' : fd});
+				$('#to-date').on('click', function() {
+					var x = new Date($('#from-date').val());
+					var xy = x.getFullYear();
+					var xm = x.getMonth() + 1;
+					var xd = x.getDate() + 1;
+					var td = xy + '-' + xm + '-' + xd;
+					$('#to-date').attr({'min' : td});
+				});
+			</script>
+		</div>
+		<div>
+			<div class="inlined">
+				<input type="button" id="check-button" value="Check">
+			</div>
+			<div class="inlined">
+				<input type="button" id="reserve-button" value="Reserve" style="visibility: hidden;">
+			</div>
+		</div>
+	</form>
+</div>
+<div class="hotels">
+	<div class="hotel" id="Animus">
+		<h2 style="display: inline;">Animus</h2>
+		<i class="fa fa-plus"></i>
+		<i class="fa fa-minus"></i><br>
+		<img src="assets/css/Animus.jpg">
+		<p class="animus" style="visibility: hidden;">Animus is strategically located, less than 3 km away from Vatican City. Well connected by public transport. Decorated & furnished in a modern elegant style, our rooms and facilities are fresh & stylish, yet maintaining a coziness & warmth that are essential to us. Extra comfort is guaranteed by our hi-speed Wi-Fi, satellite HD LCD TVs, sound-proof double windows, and other facilities.</p>
+
+		<script>
+			$('#Animus').on('click', '.fa-plus', function() {
+				$('.animus').css('visibility', 'visible');
+			});
+			$('#Animus').on('click', '.fa-minus', function() {
+				$('.animus').css('visibility', 'hidden');
+			})
+		</script>
+	</div>
+	<div class="hotel" id="Ludendorf">
+		<h2 style="display: inline;">Ludendorf</h2>
+		<i class="fa fa-plus"></i>
+		<i class="fa fa-minus"></i><br>
+		<img src="assets/css/Ludendorf.jpg">
+		<p class="ludendorf" style="visibility: hidden;">Ideally situated just 12 miles from Ludendorf, this hotel's location provides guests with easy access to all this area has to offer. Whether you want to be close to Broadway, Newark Airport or the Meadowlands, the Ludendorf Hotel is the place for you. The hotel offers amenities like a 24-hour Business Center, a full service restaurant, and a swimming pool. In addition to being 12 miles from NYC, the hotel is located close to Willowbrook Mall, a shopping mecca with 200 stores to choose from.</p>
+
+		<script>
+			$('#Ludendorf').on('click', '.fa-plus', function() {
+				$('.ludendorf').css('visibility', 'visible');
+			});
+			$('#Ludendorf').on('click', '.fa-minus', function() {
+				$('.ludendorf').css('visibility', 'hidden');
+			})
+		</script>
+	</div>
+	<div class="hotel" id="Helix">
+		<h2 style="display: inline;">Helix</h2>
+		<i class="fa fa-plus"></i>
+		<i class="fa fa-minus"></i><br>
+		<img src="assets/css/Helix.jpg">
+		<p class="helix" style="visibility: hidden;">Helix is in close proximity to Wembley Stadium and Wembley Arena, both just a few minutes’ walk from the hotel. Each of the 210 guest rooms have wireless internet and satellite TV. Inviting, modern and cozy, with a comfortable bed and a functional bathroom, everything you need for a pleasant stay. The hotel has excellent local transport connections into central London.</p>
+
+		<script>
+			$('#Helix').on('click', '.fa-plus', function() {
+				$('.helix').css('visibility', 'visible');
+			});
+			$('#Helix').on('click', '.fa-minus', function() {
+				$('.helix').css('visibility', 'hidden');
+			})
+		</script>
+	</div>
+	<div class="hotel" id="VC-Hotel">
+		<h2 style="display: inline;">VC Hotel</h2>
+		<i class="fa fa-plus"></i>
+		<i class="fa fa-minus"></i><br>
+		<img src="assets/css/VC Hotel.jpg">
+		<p class="vc-hotel" style="visibility: hidden;">If you want to get cheap and excellent service, then your choice MUST be the VC Hotel. There is no better place to enjoy Atlantic Ocean than on the outdoor sun deck at the VC Hotel. The sun deck features comfortable seating areas so you can soak up the sun in style. The beach is in 5 minutes from the hotel by feet, and residents of our hotel can get free drink in the bar on the beach.</p>
+
+		<script>
+			$('#VC-Hotel').on('click', '.fa-plus', function() {
+				$('.vc-hotel').css('visibility', 'visible');
+			});
+			$('#VC-Hotel').on('click', '.fa-minus', function() {
+				$('.vc-hotel').css('visibility', 'hidden');
+			})
+		</script>
+	</div>
+	<div class="hotel" id="LC-Hotel">
+		<h2 style="display: inline;">LC Hotel</h2>
+		<i class="fa fa-plus"></i>
+		<i class="fa fa-minus"></i><br>
+		<img src="assets/css/LC Hotel.jpg">
+		<p class="lc-hotel" style="visibility: hidden;">The LC Hotel is just a 15-minute drive from Liberty City’s center, located in the center of Duxes. We offer gym, free parking, and a modern restaurant serving hearty cuisine. A regular Airport Hopper Bus service is available. Each bright modern room at The LC Hotel includes a private bathroom and hairdryer. Free tea and coffee is provided in each room, along with flat-screen cable TV and free Wi-Fi. "Perfect location, great staff. Nice rooms with a great breakfast." is the synonym of the LC Hotel.</p>
+
+		<script>
+			$('#LC-Hotel').on('click', '.fa-plus', function() {
+				$('.lc-hotel').css('visibility', 'visible');
+			});
+			$('#LC-Hotel').on('click', '.fa-minus', function() {
+				$('.lc-hotel').css('visibility', 'hidden');
+			});
+		</script>
+
+	</div>
+	<div class="hotel" id="LS-Hotel">
+		<h2 style="display: inline;">LS Hotel</h2>
+		<i class="fa fa-plus"></i>
+		<i class="fa fa-minus"></i><br>
+		<img src="assets/css/LS Hotel.jpg">
+		<p class="ls-hotel" style="visibility: hidden;">Days spent lounging by the rooftop pool. Nights remembered with cocktails and skyline views. Moments spent rubbing shoulders with celebrity entourages. Retreatment in the best wellness-inspiring rooms of the spa. Situated in downtown Los Santos at Groove Street, LS Hotel maker every experience to articulate the charisma of this iconic destination.</p>
+
+		<script>
+			$('#LS-Hotel').on('click', '.fa-plus', function() {
+				$('.ls-hotel').css('visibility', 'visible');
+			});
+			$('#LS-Hotel').on('click', '.fa-minus', function() {
+				$('.ls-hotel').css('visibility', 'hidden');
+			})
+		</script>
+	</div>
+</div>
+<style>
+	p {
+		max-width: 400px;
+		background: white;
+		padding: 5px;
+		border-radius: 5px;
+	}
+</style>
+<script src="assets/js/script.js"></script>
+</body>
+</html>

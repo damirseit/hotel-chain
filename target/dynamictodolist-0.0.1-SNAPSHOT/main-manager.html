@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script type="text/javascript" src="assets/js/jquery-3.5.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" rel="stylesheet">
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="brand-title">GTA</div>
+      <div class="navbar-links">
+        <ul>
+          <li><a style="cursor: pointer;" onclick="showEmployeeList()">Employee list</a></li>
+          <li><a style="cursor: pointer;" onclick="showSeasonsList()">Seasons list</a></li>
+          <li><a style="cursor: pointer;" onclick="showCreateSeason()">Create Season</a></li>
+        </ul>
+      </div>
+      <div class="navbar-links" style="float: right;">
+        <ul>
+          <li><a style="cursor: pointer;" id="user">User</a></li>
+          <li><a href="index.html" class="sign-out">Sign out</a></li>
+        </ul>
+      </div>
+    </nav>
+    <div style="align-items: center; background: white;">
+      <h1 class="h1-hotelname" style="text-align: center;"></h1>
+    </div>
+    <div class="tables">
+      <table class="employees">
+        <thead>
+        <tr class="head-row">
+          <th>Name</th>
+          <th>ID</th>
+          <th>Week start</th>
+          <th>Week end</th>
+          <th>Day start</th>
+          <th>Day end</th>
+          <th>Salary</th>
+          <th></th>
+        </tr>
+        </thead>
+      </table>
+      <table class="seasons" style="width: 70%;">
+        <tr>
+          <th>Name</th>
+          <th>Start date</th>
+          <th>End date</th>
+          <th>Additional price</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </table>
+      <table class="create-season">
+        <tr>
+          <th>Create Season</th>
+          <td><input type="textbox" id="season-name" placeholder="Season name"></td>
+          <td><input type="date" id="from-date"></td>
+          <td><input type="date" id="to-date"></td>
+          <script>
+            var n = new Date();
+            var y = n.getFullYear();
+            var m = n.getMonth() + 1;
+            var d = n.getDate();
+            var fd = y + '-' + m + '-' + d;
+            $('#from-date').attr({'min' : fd});
+            $('#to-date').on('click', function() {
+              var x = new Date($('#from-date').val());
+              var xy = x.getFullYear();
+              var xm = x.getMonth() + 1;
+              var xd = x.getDate() + 1;
+              var td = xy + '-' + xm + '-' + xd;
+              $('#to-date').attr({'min' : td});
+            });
+          </script>
+          <td><input type="number" id="additional-price" placeholder="Additional Price"></td>
+          <td><button id="create">Create</button></td>
+        </tr>
+      </table>
+    </div>
+    <script>
+      $('.employees').hide();
+      $('.seasons').hide();
+      $('.create-season').hide();
+
+      function showEmployeeList() {
+        $('.employees').show();
+      }
+
+      function showSeasonsList() {
+        $('.seasons').show();
+      }
+
+      function showCreateSeason() {
+        $('.create-season').show();
+      }
+
+      $.ajax({
+        url: 'services/items/user',
+        dataType: 'json',
+        success: function(r) {
+          $('#user').text(r.response);
+        }
+      });
+
+      $.ajax({
+        url: 'services/items/hotelname',
+        dataType: 'json',
+        success: function(r) {
+          $('.h1-hotelname').text('You are the manager of ' + r.response);
+        }
+      });
+
+      $.ajax({
+        url: 'services/items/getemployees',
+        dataType: 'json',
+        success: function(r) {
+          r.forEach(function(l) {
+            var tr = "<tr>", i = 0;
+            l.forEach(function(item) {
+              tr += '<td>'
+              if(i == 0) {
+                tr += "<input type='textbox' class='name' value='" + item + "' readonly>";
+              }
+              else if(i == 1) {
+                tr += "<input type='textbox' class='ID' value='" + item + "' readonly>";
+              }
+              else if(i == 2) {
+                tr += "<input type='textbox' class='week-start' value='" + item + "'>";
+              }
+              else if(i == 3) {
+                tr += "<input type='textbox' class='week-end' value='" + item + "'>";
+              }
+              else if(i == 4) {
+                tr += "<input type='textbox' class='day-start' value='" + item + "'>";
+              }
+              else if(i == 5) {
+                tr += "<input type='textbox' class='day-end' value='" + item + "'>";
+              }
+              else if(i == 6) {
+                tr += "<input type='textbox' class='salary' value='" + item + "'>";
+              }
+              i++;
+              tr += '</td>';
+            });
+            tr += '<td><button class="change-button">Change</button></td>';
+            tr += '</tr>';
+            $('.employees').append(tr);
+          });
+        }
+      });
+
+      $('.employees').on('click', '.change-button', function() {
+        var tr = $(this).closest('tr');
+        var ID = tr.children('td').find('.ID').val();
+        var weekstart = tr.children('td').find('.week-start').val();
+        var weekend = tr.children('td').find('.week-end').val();
+        var daystart = tr.children('td').find('.day-start').val();
+        var dayend = tr.children('td').find('.day-end').val();
+        var salary = tr.children('td').find('.salary').val();
+
+        $.ajax({
+          url: 'services/items/changeemployees',
+          dataType: 'json',
+          data: {
+            employeeID: ID,
+            weekStart: weekstart,
+            weekEnd: weekend,
+            dayStart: daystart,
+            dayEnd: dayend,
+            Salary: salary
+          }
+        })
+      })
+
+      $.ajax({
+        url: 'services/items/getseasons',
+        dataType: 'json',
+        success: function(r) {
+          r.forEach(function(l) {
+            var tr = '<tr>';
+            var i = 0;
+            l.forEach(function(item) {
+              tr += '<td>';
+              if(i == 0) {
+                tr += "<input type='textbox' class='name' value='" + item + "' readonly>";
+              }
+              else if(i == 1) {
+                tr += "<input type='textbox' class='start-date' value='" + item + "'>";
+              }
+              else if(i == 2) {
+                tr += "<input type='textbox' class='end-date' value='" + item + "'>";
+              }
+              else if(i == 3) {
+                tr += "<input type='number' class='additional-price' value='" + item + "'>";
+              }
+              i++;
+              tr += '</td>'
+            });
+            tr += '<td><button class="btn-change">Change</button></td>';
+            tr += '<td><button class="btn-delete">Delete</button></td>';
+            tr += '</tr>';
+            $('.seasons').append(tr);
+          })
+        }
+      });
+
+      $('.seasons').on('click', '.btn-change', function() {
+        var item = $(this).closest('tr');
+        var name = item.children('td').find('.name').val();
+        var startDate = item.children('td').find('.start-date').val();
+        var endDate = item.children('td').find('.end-date').val();
+        var addPrice = item.children('td').find('.additional-price').val();
+
+        $.ajax({
+          url: 'services/items/changeseason',
+          dataType: 'json',
+          data: {
+            Name: name,
+            startDate: startDate,
+            endDate: endDate,
+            addPrice: addPrice
+          },
+          success: function (r){
+            alert(r.response);
+          }
+        });
+      });
+
+      $('.seasons').on('click', '.btn-delete', function() {
+        var item = $(this).closest('tr');
+        var toDel = item.children('td').find('.name').val();
+
+        $.ajax({
+          url: 'services/items/deleteseason',
+          dataType: 'json',
+          data: {
+            Name: toDel
+          },
+          success: function(r) {
+          item.remove();
+        }
+      });
+      });
+
+      $('.create-season').on('click', '#create', function() {
+        $.ajax({
+          url: 'services/items/createseason',
+          dataType: 'json',
+          data: {
+            name: $('#season-name').val(),
+            fromDate: $('#from-date').val(),
+            toDate: $('#to-date').val(),
+            addPrice: $('#additional-price').val()
+          }
+        })});
+    </script>
+    <script src="assets/js/script.js"></script>
+  </body>
+</html>

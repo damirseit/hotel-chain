@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script type="text/javascript" src="assets/js/jquery-3.5.1.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+		<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" rel="stylesheet">
+	</head>
+	<body>
+		<nav class="navbar">
+			<div class="brand-title">GTA</div>
+			<div class="navbar-links">
+				<ul>
+					<li><a style="cursor: pointer;" id="user">User</a></li>
+					<li><a href="index.html" class="sign-out">Sign out</a></li>
+				</ul>
+			</div>
+		</nav>
+		<table class="bill">
+			<tr>
+				<th>Guest ID</th>
+				<th>Reservation ID</th>
+				<th>Hotel Name</th>
+				<th>From Date</th>
+				<th>To Date</th>
+				<th>Type</th>
+				<th>Date</th>
+				<th>Price</th>
+			</tr>
+		</table>
+		<button id="btn1">Print</button>
+		<script>
+			$(document).ready(function () {
+				$('.bill').append(getCookie("bill"));
+				$.ajax({
+					url: 'services/items/user',
+					dataType: 'json',
+					success: function (r) {
+						$('#user').text(r.response);
+					}
+				});
+			});
+			$('#btn1').on('click', function (){
+				$('#btn1').css('visibility', 'hidden');
+				window.print();
+				$('#btn1').css('visibility', 'visible');
+			});
+		</script>
+		<script src="assets/js/script.js"></script>
+		<style>
+			body {
+				background: none;
+			}
+		</style>
+	</body>
+</html>

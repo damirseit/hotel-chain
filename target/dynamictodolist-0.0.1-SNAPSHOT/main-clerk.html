@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script type="text/javascript" src="assets/js/jquery-3.5.1.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar">
+	<div class="brand-title">GTA</div>
+	<div class="navbar-links">
+		<ul>
+			<li><a style="cursor: pointer;" id="user">User</a></li>
+			<li><a href="index.html" class="sign-out">Sign out</a></li>
+		</ul>
+	</div>
+</nav>
+<div style="align-items: center; background: white;">
+	<h1 class="h1-hotelname2" style="text-align: center;"></h1>
+</div>
+<div class="tables">
+	<table id="reservations" style="width: 70%;">
+		<tr>
+			<th>Reservation ID</th>
+			<th>Guest ID</th>
+			<th>From date</th>
+			<th>To date</th>
+			<th>Price</th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th></th>
+		</tr>
+	</table>
+</div>
+
+<div class="booking">
+	<form class="reservation2">
+		<div>
+			<div class="inlined">
+				<label>Guest ID</label><br>
+				<input type="textbox" id="guest-id">
+			</div>
+			<div class="inlined">
+				<label for="room-type">Room Type</label><br>
+				<select id="room-type" name="roomType">
+					<option value="single">Single</option>
+					<option value="double">Double</option>
+					<option value="presidental">Presidental</option>
+				</select>
+			</div>
+		</div>
+		<div>
+			<div class="inlined">
+				<label>From date</label><br>
+				<input type="date" id="from-date">
+			</div>
+			<div class="inlined">
+				<label>To date</label><br>
+				<input type="date" id="to-date">
+			</div>
+
+			<script>
+				var n = new Date();
+				var y = n.getFullYear();
+				var m = n.getMonth() + 1;
+				var d = n.getDate();
+				var fd = y + '-' + m + '-' + d;
+				$('#from-date').attr({'min' : fd});
+				$('#to-date').on('click', function() {
+					var x = new Date($('#from-date').val());
+					var xy = x.getFullYear();
+					var xm = x.getMonth() + 1;
+					var xd = x.getDate() + 1;
+					var td = xy + '-' + xm + '-' + xd;
+					$('#to-date').attr({'min' : td});
+				});
+			</script>
+		</div>
+		<div>
+			<div class="inlined">
+				<input type="button" id="check-clerk" value="Check">
+			</div>
+			<div class="inlined">
+				<input type="button" id="create-button" value="Reserve" style="visibility: hidden;">
+			</div>
+			<div class="inlined">
+				<input type="button" id="add-occupants" value="Add occupant" style="visibility: hidden;">
+			</div>
+		</div>
+		<div>
+			<ul id="occupants"></ul>
+		</div>
+	</form>
+</div>
+<script>
+	$.ajax({
+		url: 'services/items/hotelname',
+		dataType: 'json',
+		success: function(r) {
+			$('.h1-hotelname2').text('You are the clerk of ' + r.response);
+		}
+	});
+
+	$('#check-clerk').on('click', function() {
+		var guestID = $('#guest-id').val();
+		var fromDate = $('#from-date').val();
+		var toDate = $('#to-date').val();
+		var roomType = $('#room-type').val();
+		$.ajax({
+			url: 'services/items/checkclerk',
+			dataType: 'json',
+			data: {
+				GuestID: guestID,
+				FromDate: fromDate,
+				ToDate: toDate,
+				RoomType: roomType,
+			},
+			success: function(r) {
+				if(r.response == "no") {
+					alert("Booked :(");
+				}
+				else if(r.response == "yes") {
+
+					alert("This room is not booked. It costs " + r.price);
+					$('#create-button').css('visibility', 'visible');
+
+					if(roomType != 'single'){
+						$('#add-occupants').css('visibility', 'visible');
+					}
+
+				}
+			}
+		});
+	});
+	$.ajax({
+		url: 'services/items/user',
+		dataType: 'json',
+		success: function (r) {
+			$('#user').text(r.response);
+		}
+	});
+	$.ajax({
+		url: 'services/items/notification',
+		dataType: 'json',
+		success: function (r) {
+			if(r.response != "none"){
+				setTimeout(function() {
+					alert(r.response);
+				}, 500);
+			}
+		}
+	});
+	$.ajax({
+		url: 'services/items/userinfo',
+		dataType: 'json',
+		success: function(r) {
+			r.forEach(function(e) {
+				$('#user-data').append('<li>' + e + '</li>');
+			})
+		}
+	});
+
+	$.ajax({
+		url: 'services/items/getreservations',
+		dataType: 'json',
+		success: function(r) {
+			r.forEach(function(l) {
+				var myTr = "<tr>";
+				var i = 0;
+				var checkIn, checkOut;
+				l.forEach(function(item) {
+					myTr += "<td>";
+					if(i == 0) {
+						myTr += "<input type='textbox' class='r-ID' value='" + item + "' readonly>";
+					}
+					else if(i == 1) {
+						myTr += "<input type='textbox' class='g-ID' value='" + item + "' readonly>";
+					}
+					else if(i == 2) {
+						myTr += "<input type='textbox' class='from-date' value='" + item + "'>";
+					}
+					else if(i == 3) {
+						myTr += "<input type='textbox' class='to-date' value='" + item + "'>";
+					}
+					else if(i == 4) {
+						myTr += "<input type='textbox' class='price' value='" + item + "'>";
+					}
+					else if(i == 5) {
+						checkIn = item;
+					}
+					else if(i == 6) {
+						checkOut = item;
+					}
+					myTr += "</td>";
+					i++;
+				});
+				myTr += "<td><button class='delete-btn'>Delete</button></td>";
+				myTr += "<td><button class='change-btn'>Change</button></td>";
+				if(checkIn == '0' && checkOut == '0') {
+					myTr += "<td><button class='checkin-btn'>Check In</button></td>";
+					myTr += "<td><button class='checkout-btn' disabled>Check Out</button></td>";
+				}
+				else if(checkIn == '1' && checkOut == '0') {
+					myTr += "<td><button class='checkin-btn' disabled>Check In</button></td>";
+					myTr += "<td><button class='checkout-btn'>Check Out</button></td>";
+				}
+				else if(checkIn == '1' && checkOut == '1') {
+					myTr += "<td><button class='checkin-btn' disabled>Check In</button></td>";
+					myTr += "<td><button class='checkout-btn' disabled>Check Out</button></td>";
+				}
+				myTr += '</tr>';
+				$('#reservations').append(myTr);
+			})
+		}
+	});
+	$('#reservations').on('click', '.checkin-btn', function() {
+		var tr = $(this).closest('tr');
+		$.ajax({
+			url: 'services/items/checkin',
+			dataType: 'json',
+			data: {
+				rID: tr.children('td').find('.r-ID').val()
+			},
+			success: function(r) {
+				tr.children('td').find('.checkin-btn').prop('disabled', 'true');
+			}
+		})
+	});
+
+	$('#reservations').on('click', '.checkout-btn', function() {
+		var tr = $(this).closest('tr');
+		$.ajax({
+			url: 'services/items/checkout',
+			dataType: 'json',
+			data: {
+				rID: tr.children('td').find('.r-ID').val()
+			},
+			success: function(r) {
+				tr.children('td').find('.checkout-btn').prop('disabled', 'true');
+			}
+		})
+	});
+	$('#reservations').on('click', '.delete-btn', function() {
+		var tr = $(this).closest('tr');
+		var toDel = tr.children('td').find('.r-ID').val();
+		$.ajax({
+			url: 'services/items/deletereservation',
+			dataType: 'json',
+			data: {
+				ReservationID: toDel
+			},
+			success: function(r) {
+				tr.remove();
+			}
+		});
+	});
+	$('#reservations').on('click', '.change-btn', function() {
+		var tr = $(this).closest('tr');
+		var rID = tr.children('td').find('.r-ID').val();
+		var fromDate = tr.children('td').find('.from-date').val();
+		var toDate = tr.children('td').find('.to-date').val();
+		var price = tr.children('td').find('.price').val();
+		$.ajax({
+			url: 'services/items/changereservation',
+			dataType: 'json',
+			data: {
+				ReservationID: rID,
+				FromDate: fromDate,
+				ToDate: toDate,
+				Price: price
+			},
+			success: function(r) {
+			}
+		});
+	});
+
+	$('#create-button').on('click', function() {
+		var list = [];
+		$('#occupants li').each(function(i) {
+			var item = $(this).children('input').val();
+			if(item != ''){
+				list.push(item);
+			}
+		});
+		var guestID  = $('#guest-id').val();
+		var fromDate = $('#from-date').val();
+		var toDate = $('#to-date').val();
+		var roomType = $('#room-type').val();
+		$.ajax({
+			url: 'services/items/createreservation',
+			dataType: 'json',
+			data: {
+				GuestID: guestID,
+				FromDate: fromDate,
+				ToDate: toDate,
+				RoomType: roomType,
+				Names: list
+			},
+			success: function(r) {
+				alert("You have successfully booked your room");
+			}
+		})
+	});
+</script>
+<script src="assets/js/script.js"></script>
+</body>
+</html>

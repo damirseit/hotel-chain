@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script type="text/javascript" src="assets/js/jquery-3.5.1.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+<div>
+	<nav class="navbar">
+		<div class="brand-title">GTA</div>
+		<div class="navbar-links">
+			<ul>
+			</ul>
+		</div>
+	</nav>
+</div>
+<div class="login-box">
+	<h3>Sign up</h3>
+	<form>
+		<div>
+			<input type="textbox" id="firstName" placeholder="First Name">
+		</div>
+		<div>
+			<input type="textbox" id="secondName" placeholder="Second Name">
+		</div>
+		<div>
+			<input type="textbox" id="email" placeholder="Email">
+		</div>
+		<div>
+			<input type="textbox" id="mPhone" placeholder="Mobile Phone">
+		</div>
+		<div>
+			<input type="textbox" id="hPhone" placeholder="Home Phone">
+		</div>
+		<div>
+			<select id="idType" name="id_types">
+				<option value="" disabled selected hidden>Identification Type</option>
+				<option value="national_id">National ID</option>
+				<option value="passport">Passport ID</option>
+			</select>
+		</div>
+		<div>
+			<input type="textbox" id="idNumber" placeholder="Identification Number">
+		</div>
+		<div>
+			<input type="textbox" id="address" placeholder="Address">
+		</div>
+		<div>
+			<input type="textbox" id="username" placeholder="Username">
+		</div>
+		<div>
+			<input type="password" id="pass" placeholder="Password">
+		</div>
+		<div>
+			<input type="button" value="Register" id="btn">
+		</div>
+	</form><br>
+</div>
+
+<script>
+	$('#btn').on('click', function() {
+		var firstName = $('#firstName').val();
+		var secondName = $('#secondName').val();
+		var email = $('#email').val();
+		var mPhone = $('#mPhone').val();
+		var hPhone = $('#hPhone').val();
+		var idType = $('#idType').val();
+		var idNumber = $('#idNumber').val();
+		var address = $('#address').val();
+		var username = $('#username').val();
+		var password = $('#pass').val();
+
+		$.ajax({
+			url: 'services/items/signup',
+			dataType: 'json',
+			data: {
+				FirstName: firstName,
+				SecondName: secondName,
+				Email: email,
+				MobilePhone: mPhone,
+				Username: username,
+				Password: password,
+				Address: address,
+				IDType: idType,
+				IDNumber: idNumber,
+				HomePhone: hPhone,
+			},
+			success: function(r) {
+				if(r.reponse == "exist") {
+					alert("You already have an account.");
+				}
+				else {
+					$(location).attr('href', 'sign-in-page.html');
+					alert(r.response);
+				}
+			}
+		});
+
+		return false;
+	});
+</script>
+<script src="assets/js/script.js"></script>
+</body>
+</html>

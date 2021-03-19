@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script type="text/javascript" src="assets/js/jquery-3.5.1.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+		<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" rel="stylesheet">
+	</head>
+	<body>
+		<div>
+			<nav class="navbar">
+				<div class="brand-title">GTA</div>
+				<div class="navbar-links">
+					<ul>
+					</ul>
+				</div>
+			</nav>
+		</div>
+		<div class="login-box">
+			<h1>Sign up</h1>
+			<form method="post">
+				<div class="txt_field">
+					<input type="text" id="firstName">
+					<span></span>
+					<label>First Name</label>
+				</div>
+				<div class="txt_field">
+					<input type="text" id="secondName">
+					<span></span>
+					<label>Second Name</label>
+				</div>
+				<div class="txt_field">
+					<input type="text" id="email">
+					<span></span>
+					<label>Email</label>
+				</div>
+				<div class="txt_field">
+					<input type="text" id="mPhone">
+					<span></span>
+					<label>Mobile Phone Number</label>
+				</div>
+				<div class="txt_field">
+					<input type="text" id="hPhone">
+					<span></span>
+					<label>Home Phone Number</label>
+				</div>
+				<div>
+					<label for="idType">Identification type</label>
+					<select id="idType" name="id_types">
+						<option value="national_id">National ID</option>
+						<option value="passport">Passport ID</option>
+					</select>
+				</div>
+				<div class="txt_field">
+					<input type="text" id="idNumber">
+					<span></span>
+					<label>Identification number</label>
+				</div>
+				<div class="txt_field">
+					<input type="text" id="address">
+					<span></span>
+					<label>Address</label>
+				</div>
+				<div class="txt_field">
+					<input type="text" id="occupants">
+					<span></span>
+					<label>Number of Occupants</label>
+				</div>
+				<div class="txt_field">
+					<input type="text" id="username">
+					<span></span>
+					<label>Username</label>
+				</div>
+				<div class="txt_field">
+					<input type="password" id="pass">
+					<span></span>
+					<label>Password</label>
+				</div>
+				<input type="button" value="Register" id="btn">
+			</form><br>
+		</div>
+		
+		<script>
+			$('#btn').on('click', function() {
+				var firstName = $('#firstName').val();
+				var secondName = $('#secondName').val();
+				var email = $('#email').val();
+				var mPhone = $('#mPhone').val();
+				var hPhone = $('#hPhone').val();
+				var idType = $('#idType').val();
+				var idNumber = $('#idNumber').val();
+				var address = $('#address').val();
+				var occupants = $('#occupants').val();
+				var username = $('#username').val();
+				var password = $('#pass').val();
+
+				$.ajax({
+					url: 'services/items/signup',
+					dataType: 'json',
+					data: {
+						FirstName: firstName,
+						SecondName: secondName,
+						Email: email,
+						MobilePhone: mPhone,
+						Username: username,
+						Password: password,
+						Address: address,
+						IDType: idType,
+						IDNumber: idNumber,
+						HomePhone: hPhone,
+						Occupants: occupants
+					},
+					success: function(r) {
+						alert(r.response);
+					}
+				});
+
+				$(location).attr('href', 'sign-in-page.html');
+				return false;
+			});
+		</script>
+		<script src="assets/js/script.js"></script>
+	</body>
+</html>

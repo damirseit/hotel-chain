@@ -1,0 +1,367 @@
+*{
+	font-family: Roboto;
+	box-sizing: border-box;
+}
+
+html {
+	height: 100%;
+}
+
+body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	background: #77A1D3;  /* fallback for old browsers */
+	background: -webkit-linear-gradient(to right, #E684AE, #79CBCA, #77A1D3);  /* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to right, #E684AE, #79CBCA, #77A1D3); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
+
+div {
+	display: block;
+}
+
+input {
+	border: none;
+}
+
+.login-box {
+	position: absolute;
+	width: 350px;
+	top: 10%;
+	left: 50%;
+	transform: translateX(-50%);
+	background: white;
+	margin-bottom: 50px;
+	border-radius: 5px;
+}
+
+.login-box h3 {
+	margin: 0;
+	padding-top: 8px;
+	padding-bot: 5px;
+	text-align: center;
+	border-bottom: 1px solid black;
+	height: 40px;
+}
+
+.login-box input[type="textbox"], input[type="password"], #idType {
+	width: 90%;
+	height: 40px;
+	border: none;
+	margin: 10px;
+}
+
+#idType {
+	margin-left: -22px;
+	font-style: italic;
+	color: grey;
+}
+
+.login-box option:not(:first-of-type) {
+	color: black;
+}
+
+::placeholder {
+	font-style: italic;
+}
+
+.login-box form {
+	padding: 10px 10px;
+	text-align: center;
+}
+
+.topright {
+	position: absolute;
+	top: 8px;
+	right: 16px;
+}
+
+.navbar {
+	margin-bottom: 0;
+}
+
+.navbar {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background-color: #333;
+	color: white;
+}
+
+.brand-title {
+	font-size: 2rem;
+	margin: .5rem;
+}
+
+.brand-title:hover {
+	cursor: pointer;
+}
+
+.navbar-links ul {
+	margin: 0;
+	padding: 0;
+	display: flex;
+}
+
+.navbar-links li {
+	list-style: none;
+}
+
+.navbar-links li a {
+	text-decoration: none;
+	color: white;
+	padding: 1rem;
+	display: block;
+}
+
+.navbar-links li:hover {
+	background-color: #555;
+}
+
+.left {
+	float: left;
+}
+
+.page {
+	height: 100%;
+	background-size: cover;
+	background-image: url('nu.jpg');
+}
+
+.reservation {
+	box-sizing: content-box;
+	border-radius: 4px;
+	background-color: white;
+	align-items: center;
+	width: 50%;
+	max-width: 345px;
+	min-height: 100px;
+	overflow: hidden;
+	padding: 30px 20px;
+	position: absolute;
+	top: 20%;
+	left: 60%;
+}
+
+.reservation div {
+	margin-bottom: 10px;
+}
+
+.reservation label {
+	color: black;
+	font-weight: bold;
+}
+
+.reservation input[type="date"], select {
+	border-radius: 3px;
+	height: 40px;
+	width: 140px;
+	margin-right: 30px;
+	margin-top: 0.5rem;
+	padding: 10px 6px;
+	background: white;
+}
+
+.inlined {
+	display: inline-block;
+}
+
+.reservation #occupants {
+	list-style: none;
+	padding: 0 0 5px;
+	margin: 0;
+}
+
+.reservation li {
+	width: 100%;
+	padding: 5px;
+}
+
+input[type="button"], button, .tables button {
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	box-sizing: border-box;
+	margin: 0;
+	overflow: visible;
+	text-transform: none;
+	cursor: pointer;
+	display: inline-block;
+	color: #fff;
+	background-color: #000;
+	font-weight: 700;
+	padding: 12px 20px;
+	border-radius: 4px;
+	border: none;
+	transition: 0.2s all;
+}
+
+.booking {
+	padding: 10px 20px;
+}
+
+.reservation2 {
+	box-sizing: content-box;
+	border-radius: 4px;
+	background-color: white;
+	align-items: center;
+	min-width: 100px;
+	min-height: 100px;
+	overflow: hidden;
+	padding: 30px 20px;
+	display: inline-block;
+}
+
+.reservation2 label {
+	color: black;
+	font-weight: bold;
+}
+
+.reservation2 input[type="date"], select, input[type="textbox"] {
+	border: none;
+	height: 40px;
+	width: 160px;
+	margin: 0;
+	padding: 10px 6px;
+	background: white;
+}
+
+.reservation2 select {
+	color: grey;
+}
+
+.reservation2 option:not(:first-of-type) {
+	color: black;
+}
+
+.inlined {
+	display: inline-block;
+}
+
+.reservation2 #occupants {
+	list-style: none;
+	padding: 0 0 5px;
+	margin: 0;
+}
+
+.reservation2 li {
+	width: 100%;
+	padding: 5px;
+}
+
+input[type="button"]:disabled, button:disabled, .tables button:disabled {
+	background-color: gray;
+}
+
+.tables button {
+	margin-right: 10px;
+}
+
+.hotels img {
+	width: 400px;
+	height: 300px;
+}
+
+.hotels {
+	display: flex;
+	flex-wrap: wrap;
+	width: 100%;
+	padding: 10px;
+}
+
+.hotel {
+	display: inline-block;
+	width: 33%;
+}
+
+table {
+	width: 100%;
+}
+
+.tables {
+	display: table;
+	padding: 10px 20px;
+	border-radius: 5px;
+}
+
+.tables table {
+	background-color: white;
+	border-collapse: collapse;
+	margin-bottom: 20px;
+	max-width: 1400px;
+}
+
+.reservation1 {
+	max-width: 1400px;
+}
+
+.tables table tr {
+	padding: 0;
+	margin: 0;
+}
+
+.tables table td {
+	padding-top: 15px;
+	padding-bottom: 12px;
+	text-align: center;
+	float: bottom;
+}
+
+.tables table th {
+	padding: 18px 2px 15px;
+	text-transform: uppercase;
+	color: white;
+	background-color: #333333;
+	font-weight: normal;
+	text-align: center;
+}
+
+.seasons {
+	min-width: 820px;
+}
+
+.employees {
+	min-width: 1150px;
+}
+
+.create-season {
+	display: flex;
+	min-width: 820px;
+	max-width: 820px;
+	justify-content: space-between;
+}
+
+table input[type='textbox'], input[type="date"], select {
+	margin: 0;
+	border: none;
+	max-width: 85%;
+	text-align: center;
+}
+
+.user-information {
+	background: white;
+	padding: 0;
+	list-style: none;
+	margin: 0;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+
+.user-information li {
+	padding-left: 20px;
+	padding-top: 7px;
+	padding-bottom: 7px;
+}
+
+.u-info {
+	padding: 10px 20px;
+	width: 400px;
+}
+
+.u-info h3 {
+	text-align: center;
+	margin: 10px 0 0;
+	background: white;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	padding-top: 5px;
+}
